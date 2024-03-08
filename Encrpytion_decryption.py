@@ -65,8 +65,11 @@ def main():
     #generate_key(gpg,'kaushil','kaushil@hotmail.com','RSA',2048)
     # Import the key
     list_keys(gpg)
+
+
     #encrypt file
-    encrypt_file(gpg,'test1.txt','kaushil@hotmail.com','test1.gpg')
+    #encrypt_file(gpg,'test1.txt','kaushil@hotmail.com','test1.gpg')
+    decrypt_file(gpg,'test1.gpg','test1.txt')
 
 
 if __name__ == "__main__":
