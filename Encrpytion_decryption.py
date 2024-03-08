@@ -26,9 +26,15 @@ def list_keys(gpg):
         print(f"Key ID: {key['keyid']}, Type: {key['type']}, Email: {key['uids'][0]}")
 
 def decrypt_file(gpg, file_path, output_path):
-    with open(file_path, 'rb') as encrypted_file:
-        decrypted_data = gpg.decrypt_file(encrypted_file, output=output_path)
-        return decrypted_data.ok
+    try:
+        with open(file_path, 'rb') as encrypted_file:
+            decrypted_data = gpg.decrypt_file(encrypted_file, output=output_path)
+        if decrypted_data.ok:
+                print(f"File encrypted successfully. Decrypted file saved to: {output_path}")
+        else:
+                print(f"Decryption failed: {decrypted_data.status}")
+    except Exception as e:
+        print(f"An error occurred: {e}")
     
 def encrypt_file(gpg, file_path, recipient, output_path):
     try:
