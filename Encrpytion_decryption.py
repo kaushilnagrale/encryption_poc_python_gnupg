@@ -29,6 +29,17 @@ def decrypt_file(gpg, file_path, output_path):
     with open(file_path, 'rb') as encrypted_file:
         decrypted_data = gpg.decrypt_file(encrypted_file, output=output_path)
         return decrypted_data.ok
+    
+def encrypt_file(gpg, file_path, recipient, output_path):
+    try:
+        with open(file_path, 'rb') as file:
+            encrypted_data = gpg.encrypt_file(file, recipients=[recipient], output=output_path)
+            if encrypted_data.ok:
+                print(f"File encrypted successfully. Encrypted file saved to: {output_path}")
+            else:
+                print(f"Encryption failed: {encrypted_data.status}")
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
 
 def generate_key(gpg, name, email, key_type='RSA', key_length=2048):
@@ -51,9 +62,12 @@ def main():
     gpg = gnupg.GPG(gpgbinary=gpg_executable)
 
     #Generate keys
-    generate_key(gpg,'kaushil','kaushil@hotmail.com','RSA',2048)
+    #generate_key(gpg,'kaushil','kaushil@hotmail.com','RSA',2048)
     # Import the key
     list_keys(gpg)
+    #encrypt file
+    encrypt_file(gpg,'test1.txt','kaushil@hotmail.com','test1.gpg')
+
 
 if __name__ == "__main__":
     main()
